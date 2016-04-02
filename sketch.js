@@ -1,16 +1,15 @@
 var horde;
-var worldW=640, worldH=480;
+
 var hordeSpeed=2;
 function setup(){
   createCanvas(worldW,worldH);
   //create a horde;
   horde=new Horde();
-  horde.x=200;
-  horde.y=200;
+  horde.pos.set(200,200);
   //add some zombies
-  horde.add(Zombie.create(50,100))
-  .add(Zombie.create(100,250))
-  .add(Zombie.create(150,200));
+  for (var i=0;i<20;i++){
+      horde.add(Zombie.create(Math.random()*worldW, Math.random()*worldH));
+  }
 
 
 }
@@ -22,29 +21,37 @@ function draw(){
 }
 
 function keyPressed(){
+    horde.moving=true;
     if (keyCode==LEFT_ARROW){
-        horde.vx=-hordeSpeed;
+        horde.v.setX(-hordeSpeed);
     }
     if (keyCode==RIGHT_ARROW){
-        horde.vx=hordeSpeed;
+        horde.v.setX(hordeSpeed);
     }
     if (keyCode==UP_ARROW){
-        horde.vy=-hordeSpeed;
+        horde.v.setY(-hordeSpeed);
     }
     if (keyCode==DOWN_ARROW){
-        horde.vy=hordeSpeed;
+        horde.v.setY(hordeSpeed);
     }
 }
 function keyReleased(){
+    var stopX=false;
     if (!keyIsDown(LEFT_ARROW) &&
         !keyIsDown(RIGHT_ARROW)
          ){
-            horde.vx=0;
+            horde.v.setX(0);
+            stopX=true;
         }
+    var stopY=false;
     if (!keyIsDown(UP_ARROW) &&
     !keyIsDown(DOWN_ARROW)
          ){
-            horde.vy=0;
+            horde.v.setY(0);
+            stopY=true;
         }
+    if (stopX && stopY){
+        horde.moving=false;
+    }
 
 }
