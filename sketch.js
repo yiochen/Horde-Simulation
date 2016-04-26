@@ -8,7 +8,7 @@ function setup(){
   horde.pos.set(200,200);
   //add some zombies
   for (var i=0;i<20;i++){
-      horde.add(Zombie.create(Math.random()*worldW, Math.random()*worldH));
+      horde.add(Zombie.create(200,200));
   }
 
 
